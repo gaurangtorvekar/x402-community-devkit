@@ -1,11 +1,11 @@
 {
-  "name": "x402-devkit",
+  "name": "x402-community-devkit",
   "version": "0.1.0",
-  "description": "Development toolkit for x402 protocol - auto-generated wallets and quick setup for buyers and sellers",
+  "description": "Community development toolkit for x402 protocol - auto-generated wallets and quick setup for buyers and sellers. NOT AFFILIATED WITH COINBASE.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "x402-devkit": "./dist/cli/index.js"
+    "x402-community-devkit": "./dist/cli/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -63,6 +63,7 @@
     "blockchain",
     "payments",
     "devkit",
+    "community",
     "base",
     "sepolia"
   ],
@@ -70,10 +71,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gaurangtorvekar/x402-devkit"
+    "url": "https://github.com/gaurangtorvekar/x402-community-devkit"
   },
-  "homepage": "https://github.com/gaurangtorvekar/x402-devkit#readme",
+  "homepage": "https://github.com/gaurangtorvekar/x402-community-devkit#readme",
   "bugs": {
-    "url": "https://github.com/gaurangtorvekar/x402-devkit/issues"
+    "url": "https://github.com/gaurangtorvekar/x402-community-devkit/issues"
   }
 }
