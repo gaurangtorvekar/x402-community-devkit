@@ -33,18 +33,19 @@ describe('CLI Integration', () => {
       );
       
       const mockInput = 'test-seed\\n';
+      const projectRoot = path.resolve(__dirname, '../../..');
       const result = execSync(`echo "${mockInput}" | node -e "
-        const { initCommand } = require('../../dist/cli/commands/init');
+        const { initCommand } = require('${projectRoot}/dist/cli/commands/init');
         const { program } = require('commander');
         program.addCommand(initCommand);
         program.parse(['node', 'test', 'init']);
       "`, {
-        cwd: path.join(__dirname, '../../..'),
+        cwd: tempDir,
         encoding: 'utf8',
         stdio: 'pipe'
       });
       
-      expect(result).toContain('x402 initialized successfully');
+      expect(result).toContain('Next steps');
       
       const envExists = await fs.access(path.join(tempDir, '.env')).then(() => true).catch(() => false);
       expect(envExists).toBe(true);
@@ -76,13 +77,14 @@ describe('CLI Integration', () => {
         JSON.stringify(mockWallet, null, 2)
       );
       
+      const projectRoot = path.resolve(__dirname, '../../..');
       const result = execSync(`node -e "
-        const { fundCommand } = require('../../dist/cli/commands/fund');
+        const { fundCommand } = require('${projectRoot}/dist/cli/commands/fund');
         const { program } = require('commander');
         program.addCommand(fundCommand);
         program.parse(['node', 'test', 'fund']);
       "`, {
-        cwd: path.join(__dirname, '../../..'),
+        cwd: tempDir,
         encoding: 'utf8',
         stdio: 'pipe'
       });

@@ -17,5 +17,11 @@ module.exports = {
       statements: 70
     }
   },
-  testTimeout: 30000
+  testTimeout: 30000,
+  transformIgnorePatterns: [
+    'node_modules/(?!(clipboardy|chalk)/)'
+  ],
+  moduleNameMapper: {
+    '^clipboardy$': '<rootDir>/src/__tests__/fixtures/mockClipboardy.ts'
+  }
 };

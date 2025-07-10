@@ -113,10 +113,10 @@ describe('WalletManager', () => {
     
     it('should store different encrypted data for same private key', async () => {
       const seed = generateTestSeed();
-      const wallet1 = await manager.createWallet(seed);
+      await manager.createWallet(seed);
       
       const manager2 = new WalletManager(path.join(tempDir, 'wallet2.json'));
-      const wallet2 = await manager2.createWallet(seed);
+      await manager2.createWallet(seed);
       
       const file1 = await fs.readFile(testWalletPath, 'utf8');
       const file2 = await fs.readFile(path.join(tempDir, 'wallet2.json'), 'utf8');

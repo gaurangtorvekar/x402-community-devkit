@@ -1,11 +1,13 @@
 import { randomBytes, createCipheriv, createDecipheriv, scryptSync, createHash } from "crypto";
-import { generatePrivateKey, privateKeyToAccount, type PrivateKeyAccount } from "viem/accounts";
-import { createWalletClient, http } from "viem";
-import { baseSepolia } from "viem/chains";
+import { privateKeyToAccount, type PrivateKeyAccount } from "viem/accounts";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { WALLET_FILE, WALLET_ENCRYPTION_ALGORITHM } from "../config/constants";
 import { StoredWallet } from "./storage";
+
+export interface WalletWithPrivateKey extends PrivateKeyAccount {
+  privateKey: `0x${string}`;
+}
 
 export class WalletManager {
   private walletPath: string;
@@ -14,7 +16,7 @@ export class WalletManager {
     this.walletPath = walletPath;
   }
 
-  async createWallet(userSeed?: string): Promise<PrivateKeyAccount> {
+  async createWallet(userSeed?: string): Promise<WalletWithPrivateKey> {
     const entropy = this.generateEntropy(userSeed);
 
     const privateKey = this.derivePrivateKey(entropy);
@@ -22,17 +24,27 @@ export class WalletManager {
 
     await this.saveWallet(privateKey, account, entropy);
 
-    return account;
+    return {
+      ...account,
+      privateKey
+    };
   }
 
   private generateEntropy(userSeed?: string): Buffer {
-    const timestamp = Buffer.from(Date.now().toString());
-    const nanoTime = Buffer.from(process.hrtime.bigint().toString());
-    const randomness = randomBytes(32);
-    const seed = Buffer.from(userSeed || randomBytes(100).toString("hex"));
-    const pid = Buffer.from(process.pid.toString());
-
-    return Buffer.concat([timestamp, nanoTime, randomness, seed, pid]);
+    if (userSeed) {
+      // For deterministic behavior when seed is provided
+      const seed = Buffer.from(userSeed);
+      const padding = Buffer.alloc(32);
+      return Buffer.concat([seed, padding]);
+    } else {
+      // For random behavior when no seed is provided
+      const timestamp = Buffer.from(Date.now().toString());
+      const nanoTime = Buffer.from(process.hrtime.bigint().toString());
+      const randomness = randomBytes(32);
+      const pid = Buffer.from(process.pid.toString());
+      
+      return Buffer.concat([timestamp, nanoTime, randomness, pid]);
+    }
   }
 
   private derivePrivateKey(entropy: Buffer): `0x${string}` {
@@ -60,15 +72,19 @@ export class WalletManager {
     await fs.writeFile(this.walletPath, JSON.stringify(walletData, null, 2));
   }
 
-  async loadWallet(): Promise<PrivateKeyAccount | null> {
+  async loadWallet(): Promise<WalletWithPrivateKey | null> {
     try {
       const data = await fs.readFile(this.walletPath, "utf8");
       const wallet: StoredWallet = JSON.parse(data);
 
       const password = this.getWalletPassword();
-      const privateKey = this.decrypt(wallet.encryptedPrivateKey, password, wallet.salt, wallet.iv, wallet.authTag);
+      const privateKey = this.decrypt(wallet.encryptedPrivateKey, password, wallet.salt, wallet.iv, wallet.authTag) as `0x${string}`;
+      const account = privateKeyToAccount(privateKey);
 
-      return privateKeyToAccount(privateKey as `0x${string}`);
+      return {
+        ...account,
+        privateKey
+      };
     } catch {
       return null;
     }

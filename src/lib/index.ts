@@ -1,9 +1,8 @@
-import { WalletManager } from './wallet/WalletManager';
+import { WalletManager, WalletWithPrivateKey } from './wallet/WalletManager';
 import { showFundingInstructions } from './faucet/instructions';
-import { createPublicClient, createWalletClient, http, parseEther, formatEther } from 'viem';
+import { createPublicClient, http, formatEther } from 'viem';
 import { baseSepolia } from 'viem/chains';
 import { NETWORKS, type NetworkType } from './config/constants';
-import type { PrivateKeyAccount } from 'viem/accounts';
 import chalk from 'chalk';
 
 export interface X402DevKitOptions {
@@ -20,6 +19,7 @@ export class X402DevKit {
   private walletManager: WalletManager;
   private network: NetworkType;
   private publicClient: any;
+  private walletPromise: Promise<WalletWithPrivateKey> | null = null;
   
   constructor(options: X402DevKitOptions = {}) {
     this.walletManager = new WalletManager(options.walletPath);
@@ -31,7 +31,15 @@ export class X402DevKit {
     });
   }
   
-  async getWallet(): Promise<PrivateKeyAccount> {
+  async getWallet(): Promise<WalletWithPrivateKey> {
+    if (!this.walletPromise) {
+      this.walletPromise = this.initializeWallet();
+    }
+    
+    return this.walletPromise;
+  }
+  
+  private async initializeWallet(): Promise<WalletWithPrivateKey> {
     let wallet = await this.walletManager.loadWallet();
     
     if (!wallet) {
@@ -84,19 +92,19 @@ export class X402DevKit {
     await showFundingInstructions(wallet.address, this.network);
   }
   
-  createBuyer(options?: any): any {
+  createBuyer(): any {
     console.log(chalk.yellow('To create a buyer, install x402-axios or x402-fetch'));
     console.log(chalk.gray('npm install x402-axios'));
     console.log(chalk.gray('Then use withPaymentInterceptor with your wallet'));
   }
   
-  createSeller(options?: any): any {
+  createSeller(): any {
     console.log(chalk.yellow('To create a seller, install x402-express'));
     console.log(chalk.gray('npm install x402-express'));
     console.log(chalk.gray('Then use paymentMiddleware with your configuration'));
   }
 }
 
-export { WalletManager };
+export { WalletManager, WalletWithPrivateKey };
 export * from './config/constants';
 export * from './wallet/storage';

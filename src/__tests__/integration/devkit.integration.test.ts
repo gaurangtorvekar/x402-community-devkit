@@ -44,9 +44,11 @@ describe('X402DevKit Integration', () => {
     const wallets = await Promise.all(promises);
     
     const firstWallet = wallets[0];
+    expect(firstWallet).toBeDefined();
+    
     wallets.forEach(wallet => {
-      expect(wallet.address).toBe(firstWallet.address);
-      expect(wallet.privateKey).toBe(firstWallet.privateKey);
+      expect(wallet.address).toBe(firstWallet!.address);
+      expect(wallet.privateKey).toBe(firstWallet!.privateKey);
     });
   });
 });
