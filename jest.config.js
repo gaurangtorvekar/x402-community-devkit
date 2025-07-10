@@ -11,17 +11,11 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      branches: 70,
-      functions: 70,
-      lines: 70,
-      statements: 70
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
     }
   },
-  testTimeout: 30000,
-  transformIgnorePatterns: [
-    'node_modules/(?!(clipboardy|chalk)/)'
-  ],
-  moduleNameMapper: {
-    '^clipboardy$': '<rootDir>/src/__tests__/fixtures/mockClipboardy.ts'
-  }
+  testTimeout: 30000
 };

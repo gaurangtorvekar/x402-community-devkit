@@ -66,11 +66,11 @@ This project uses **Base Sepolia** testnet:
 - [x402 Protocol Documentation](https://x402.org)
 - [x402 GitHub Repository](https://github.com/coinbase/x402)
 - [Base Documentation](https://docs.base.org)
-- [x402-devkit Documentation](https://github.com/coinbase/x402-devkit)
+- [x402-devkit Documentation](https://github.com/gaurangtorvekar/x402-devkit)
 
 ## 🤝 Contributing
 
-Found a bug or have a feature request? Please open an issue on the [x402-devkit repo](https://github.com/coinbase/x402-devkit).
+Found a bug or have a feature request? Please open an issue on the [x402-devkit repo](https://github.com/gaurangtorvekar/x402-devkit).
 
 ## 📄 License
 

@@ -26,25 +26,17 @@ export class WalletManager {
 
     return {
       ...account,
-      privateKey
+      privateKey,
     };
   }
 
   private generateEntropy(userSeed?: string): Buffer {
-    if (userSeed) {
+    if (userSeed && userSeed.trim().length > 0) {
       // For deterministic behavior when seed is provided
-      const seed = Buffer.from(userSeed);
-      const padding = Buffer.alloc(32);
-      return Buffer.concat([seed, padding]);
-    } else {
-      // For random behavior when no seed is provided
-      const timestamp = Buffer.from(Date.now().toString());
-      const nanoTime = Buffer.from(process.hrtime.bigint().toString());
-      const randomness = randomBytes(32);
-      const pid = Buffer.from(process.pid.toString());
-      
-      return Buffer.concat([timestamp, nanoTime, randomness, pid]);
+      return createHash("sha256").update(userSeed.trim()).digest();
     }
+    // For random behavior when no seed is provided
+    return randomBytes(32);
   }
 
   private derivePrivateKey(entropy: Buffer): `0x${string}` {
@@ -83,7 +75,7 @@ export class WalletManager {
 
       return {
         ...account,
-        privateKey
+        privateKey,
       };
     } catch {
       return null;
@@ -99,6 +91,10 @@ export class WalletManager {
     }
   }
 
+  /**
+   * @warning This is insecure and for local development ONLY.
+   * Do not use wallets created by this tool for mainnet funds.
+   */
   private getWalletPassword(): string {
     return "x402-devkit-dev-password";
   }

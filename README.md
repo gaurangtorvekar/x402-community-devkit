@@ -2,80 +2,21 @@
 
 A development toolkit for the x402 protocol. `x402-devkit` provides auto-generated wallets and a quick setup for building buyer and seller integrations on the Base Sepolia testnet.
 
-It has 2 modes:
+It works as both:
+- **📚 A TypeScript library** - Import classes and utilities in your codebase (recommended)
+- **🔧 A CLI tool** - Scaffold projects and manage wallets from the command line
 
-- a CLI for scaffolding new projects similar to `create-react-app`
-- a library which works like a normal npm package that you can import in your codebase.
-
-## 🚀 Quick Start
-
-### Installation
+## 📦 Installation
 
 ```bash
+# As a library dependency
+npm install x402-devkit
+
+# As a global CLI tool
 npm install -g x402-devkit
 ```
 
-### Initialize x402 in an existing project
-
-```bash
-cd your-project
-x402-devkit init
-```
-
-### Create a new x402 project
-
-```bash
-x402-devkit create my-x402-app
-cd my-x402-app
-npm run fund
-npm run dev
-```
-
-### Check wallet status and get funding
-
-```bash
-x402-devkit fund
-```
-
-## 📋 Features
-
-- **🔑 Auto-generated wallets** - Secure, encrypted development wallets with cryptographic entropy
-- **💰 Funding assistance** - Built-in faucet links and balance checking for Base Sepolia
-- **🏗️ Project scaffolding** - Complete project templates with buyer/seller examples
-- **🔧 CLI tools** - Simple commands for initialization and wallet management
-- **📚 TypeScript library** - Importable classes and utilities for programmatic use
-- **🧪 Testing support** - Comprehensive test suite with unit and integration tests
-
-## 🛠️ CLI Commands
-
-### `x402-devkit init`
-
-Initialize x402 in an existing Node.js project:
-
-- Creates encrypted development wallet
-- Updates `.env` with wallet credentials
-- Adds necessary entries to `.gitignore`
-- Provides funding instructions
-
-### `x402-devkit create <name>`
-
-Create a new x402 project from scratch:
-
-- Scaffolds complete project structure
-- Installs all dependencies
-- Generates wallet and configuration
-- Includes buyer and seller examples
-
-### `x402-devkit fund`
-
-Check wallet balances and show funding instructions:
-
-- Displays current ETH and USDC balances
-- Shows funding status and requirements
-- Provides links to testnet faucets
-- Copies wallet address to clipboard
-
-## 📦 Library Usage
+## 📚 Library Usage (Recommended)
 
 ### Basic Setup
 
@@ -130,6 +71,53 @@ app.use(
 );
 ```
 
+## 🛠️ CLI Usage
+
+### Initialize x402 in an existing project
+
+```bash
+cd your-project
+x402-devkit init
+```
+
+### Create a new x402 project
+
+```bash
+x402-devkit create my-x402-app
+cd my-x402-app
+npm run fund
+npm run dev
+```
+
+### Check wallet status and get funding
+
+```bash
+x402-devkit fund
+```
+
+### CLI Commands
+
+#### `x402-devkit init`
+Initialize x402 in an existing Node.js project:
+- Creates encrypted development wallet
+- Updates `.env` with wallet credentials
+- Adds necessary entries to `.gitignore`
+- Provides funding instructions
+
+#### `x402-devkit create <name>`
+Create a new x402 project from scratch:
+- Scaffolds complete project structure
+- Installs all dependencies
+- Generates wallet and configuration
+- Includes buyer and seller examples
+
+#### `x402-devkit fund`
+Check wallet balances and show funding instructions:
+- Displays current ETH and USDC balances
+- Shows funding status and requirements
+- Provides links to testnet faucets
+- Copies wallet address to clipboard
+
 ## 🔧 Configuration
 
 ### Options
@@ -168,6 +156,15 @@ This package works with **Base Sepolia** testnet:
 - **ETH**: 0.01 ETH (for gas fees)
 - **USDC**: 0.1 USDC (for payments)
 
+## 📋 Features
+
+- **🔑 Auto-generated wallets** - Secure, encrypted development wallets with cryptographic entropy
+- **💰 Funding assistance** - Built-in faucet links and balance checking for Base Sepolia
+- **🏗️ Project scaffolding** - Complete project templates with buyer/seller examples
+- **🔧 CLI tools** - Simple commands for initialization and wallet management
+- **📚 TypeScript library** - Importable classes and utilities for programmatic use
+- **🧪 Testing support** - Comprehensive test suite with unit and integration tests
+
 ## 🔒 Security
 
 ### Development Wallets
@@ -189,7 +186,7 @@ This package works with **Base Sepolia** testnet:
 ### Setup
 
 ```bash
-git clone https://github.com/coinbase/x402-devkit
+git clone https://github.com/gaurangtorvekar/x402-devkit
 cd x402-devkit
 npm install
 ```
@@ -209,10 +206,10 @@ npm run lint          # Run linter
 
 ```bash
 # Unit tests
-npm run test src/__tests__/unit
+npm test -- --testPathPattern="unit"
 
 # Integration tests
-npm run test src/__tests__/integration
+npm test -- --testPathPattern="integration"
 
 # Coverage report
 npm run test:coverage
@@ -229,8 +226,8 @@ x402-devkit/
 │   │   ├── wallet/       # Wallet management
 │   │   ├── faucet/       # Funding instructions
 │   │   └── index.ts      # Main X402DevKit class
-│   ├── templates/        # Project scaffolding templates
 │   └── __tests__/        # Test suite
+├── templates/            # Project scaffolding templates
 ├── .github/workflows/    # CI/CD
 └── dist/                 # Built output
 ```
@@ -251,17 +248,11 @@ x402-devkit/
 - Update documentation as needed
 - Ensure all tests pass
 
-## 📚 Related Projects
-
-- [x402-axios](https://github.com/coinbase/x402-axios) - HTTP client with payment support
-- [x402-express](https://github.com/coinbase/x402-express) - Express middleware for paid APIs
-- [x402-fetch](https://github.com/coinbase/x402-fetch) - Fetch API with payment support
-
 ## 🐛 Issues & Support
 
-- [Report issues](https://github.com/coinbase/x402-devkit/issues)
-- [View documentation](https://x402.org)
-- [Join discussions](https://github.com/coinbase/x402/discussions)
+- [Report issues](https://github.com/gaurangtorvekar/x402-devkit/issues)
+- [View x402 documentation](https://x402.org)
+- [Join discussions](https://github.com/gaurangtorvekar/x402-devkit/discussions)
 
 ## 📄 License
 
@@ -278,4 +269,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-Built with ❤️ by the x402 team at Coinbase
+Built with ❤️ by Gaurang Torvekar

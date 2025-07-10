@@ -15,7 +15,6 @@ export const FAUCET_LINKS = {
       { name: "Chainlink Faucet", url: "https://faucets.chain.link/sepolia" },
       { name: "Alchemy Faucet", url: "https://www.alchemy.com/faucets/base-sepolia" },
       { name: "QuickNode Faucet", url: "https://faucet.quicknode.com/base/sepolia" },
-      { name: "Circle USDC Faucet", url: "https://faucet.circle.com/" },
     ],
     usdc: [{ name: "Circle USDC Faucet", url: "https://faucet.circle.com/" }],
   },

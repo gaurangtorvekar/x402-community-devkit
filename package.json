@@ -31,9 +31,15 @@
     "x402-express": "^1.0.0"
   },
   "peerDependenciesMeta": {
-    "x402-axios": { "optional": true },
-    "x402-fetch": { "optional": true },
-    "x402-express": { "optional": true }
+    "x402-axios": {
+      "optional": true
+    },
+    "x402-fetch": {
+      "optional": true
+    },
+    "x402-express": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
@@ -47,11 +53,27 @@
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0"
   },
-  "keywords": ["x402", "blockchain", "payments", "devkit", "base", "sepolia"],
-  "author": "",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "x402",
+    "blockchain",
+    "payments",
+    "devkit",
+    "base",
+    "sepolia"
+  ],
+  "author": "Gaurang Torvekar",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/coinbase/x402-devkit"
+    "url": "https://github.com/gaurangtorvekar/x402-devkit"
+  },
+  "homepage": "https://github.com/gaurangtorvekar/x402-devkit#readme",
+  "bugs": {
+    "url": "https://github.com/gaurangtorvekar/x402-devkit/issues"
   }
 }
