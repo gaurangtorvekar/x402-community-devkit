@@ -1,0 +1,57 @@
+{
+  "name": "x402-devkit",
+  "version": "0.1.0",
+  "description": "Development toolkit for x402 protocol - auto-generated wallets and quick setup for buyers and sellers",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "x402-devkit": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "npm run build && npm run test"
+  },
+  "dependencies": {
+    "viem": "^2.21.0",
+    "commander": "^12.0.0",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "dotenv": "^16.4.0",
+    "inquirer": "^8.2.6",
+    "clipboardy": "^3.0.0"
+  },
+  "peerDependencies": {
+    "x402-axios": "^1.0.0",
+    "x402-fetch": "^1.0.0",
+    "x402-express": "^1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "x402-axios": { "optional": true },
+    "x402-fetch": { "optional": true },
+    "x402-express": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/inquirer": "^8.2.10",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0"
+  },
+  "keywords": ["x402", "blockchain", "payments", "devkit", "base", "sepolia"],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coinbase/x402-devkit"
+  }
+}

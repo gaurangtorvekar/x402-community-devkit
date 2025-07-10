@@ -1,0 +1,32 @@
+import { X402DevKit } from 'x402-devkit';
+import dotenv from 'dotenv';
+import chalk from 'chalk';
+
+dotenv.config();
+
+async function main() {
+  console.log(chalk.cyan('🚀 x402 Development Example\n'));
+  
+  const devkit = new X402DevKit();
+  const wallet = await devkit.getWallet();
+  
+  console.log(chalk.white('Wallet address:'), chalk.green(wallet.address));
+  
+  const balances = await devkit.getBalances();
+  console.log(chalk.white('ETH balance:'), chalk.yellow(balances.eth));
+  console.log(chalk.white('USDC balance:'), chalk.yellow(balances.usdc));
+  
+  if (await devkit.needsFunding()) {
+    console.log(chalk.red('\n⚠️  Wallet needs funding!'));
+    devkit.showFundingInstructions();
+    return;
+  }
+  
+  console.log(chalk.green('\n✅ Wallet funded and ready!'));
+  console.log(chalk.cyan('\n💡 Next steps:'));
+  console.log(chalk.white('   • Run'), chalk.cyan('npm run buyer'), chalk.white('to see buyer example'));
+  console.log(chalk.white('   • Run'), chalk.cyan('npm run seller'), chalk.white('to see seller example'));
+  console.log(chalk.white('   • Build your x402 integration!\n'));
+}
+
+main().catch(console.error);

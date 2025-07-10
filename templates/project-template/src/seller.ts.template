@@ -1,0 +1,81 @@
+import express from 'express';
+import { paymentMiddleware } from 'x402-express';
+import { X402DevKit } from 'x402-devkit';
+import dotenv from 'dotenv';
+import chalk from 'chalk';
+
+dotenv.config();
+
+async function main() {
+  console.log(chalk.cyan('🏪 x402 Seller Example\n'));
+  
+  const devkit = new X402DevKit();
+  const wallet = await devkit.getWallet();
+  
+  console.log(chalk.white('Receiving payments to:'), chalk.green(wallet.address));
+  
+  const app = express();
+  app.use(express.json());
+  
+  const paymentConfig = {
+    '/api/weather': {
+      price: '$0.01',
+      network: 'base-sepolia',
+      config: {
+        description: 'Current weather data',
+        mimeType: 'application/json'
+      }
+    },
+    '/api/premium': {
+      price: '$0.10', 
+      network: 'base-sepolia',
+      config: {
+        description: 'Premium API endpoint',
+        mimeType: 'application/json'
+      }
+    }
+  };
+  
+  app.use(paymentMiddleware(
+    wallet.address,
+    paymentConfig,
+    {
+      url: 'https://x402.org/facilitator'
+    }
+  ));
+  
+  app.get('/api/weather', (req, res) => {
+    res.json({
+      temperature: 72,
+      condition: 'sunny',
+      location: 'San Francisco'
+    });
+  });
+  
+  app.get('/api/premium', (req, res) => {
+    res.json({
+      message: 'This is premium content!',
+      data: {
+        value: Math.random() * 100,
+        timestamp: new Date().toISOString()
+      }
+    });
+  });
+  
+  app.get('/health', (req, res) => {
+    res.json({ status: 'ok' });
+  });
+  
+  const PORT = process.env.PORT || 3000;
+  
+  app.listen(PORT, () => {
+    console.log(chalk.green(`\n✅ Server running on http://localhost:${PORT}`));
+    console.log(chalk.white('\nEndpoints:'));
+    console.log(chalk.gray('  Free:     '), `http://localhost:${PORT}/health`);
+    console.log(chalk.yellow('  Paid:     '), `http://localhost:${PORT}/api/weather`, chalk.gray('($0.01)'));
+    console.log(chalk.yellow('  Premium:  '), `http://localhost:${PORT}/api/premium`, chalk.gray('($0.10)'));
+    console.log(chalk.cyan('\n💡 Test with the buyer example or any x402 client!\n'));
+  });
+}
+
+main().catch(console.error);

@@ -1,0 +1,77 @@
+# {{PROJECT_NAME}}
+
+An x402 protocol integration built with x402-devkit. This project demonstrates both buyer (client) and seller (server) implementations using the x402 payment protocol.
+
+## 🚀 Quick Start
+
+### 1. Fund Your Wallet
+
+Your development wallet has been created automatically. You need to fund it with test tokens:
+
+```bash
+npm run fund
+```
+
+Follow the instructions to get:
+- **Base Sepolia ETH** (for gas fees)
+- **USDC test tokens** (for making payments)
+
+### 2. Run Examples
+
+**As a Buyer (Client):**
+```bash
+npm run buyer
+```
+This demonstrates making paid API requests using x402.
+
+**As a Seller (Server):**
+```bash
+npm run seller
+```
+This starts a server with paid endpoints protected by x402.
+
+## 📁 Project Structure
+
+```
+{{PROJECT_NAME}}/
+├── src/
+│   ├── buyer.ts    # Client example - making paid requests
+│   ├── seller.ts   # Server example - paid API endpoints
+│   └── index.ts    # Combined example
+├── .x402/
+│   └── wallet.json # Your dev wallet (DO NOT COMMIT!)
+├── .env            # Environment variables
+└── package.json    # Dependencies and scripts
+```
+
+## 🔑 Wallet Management
+
+Your development wallet is stored in `.x402/wallet.json` and is automatically:
+- ✅ Generated with cryptographic randomness
+- ✅ Encrypted for security
+- ✅ Gitignored to prevent accidental commits
+
+**⚠️ Important:** This wallet is for development only. Never use it for real funds!
+
+## 🌐 Network Information
+
+This project uses **Base Sepolia** testnet:
+- Chain ID: 84532
+- RPC URL: https://sepolia.base.org
+- Explorer: https://sepolia.basescan.org
+- USDC Contract: 0x036CbD53842c5426634e7929541eC2318f3dCF7e
+
+## 📚 Learn More
+
+- [x402 Protocol Documentation](https://x402.org)
+- [x402 GitHub Repository](https://github.com/coinbase/x402)
+- [Base Documentation](https://docs.base.org)
+- [x402-devkit Documentation](https://github.com/coinbase/x402-devkit)
+
+## 🤝 Contributing
+
+Found a bug or have a feature request? Please open an issue on the [x402-devkit repo](https://github.com/coinbase/x402-devkit).
+
+## 📄 License
+
+MIT

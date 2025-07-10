@@ -1,0 +1,41 @@
+import express from 'express';
+import { paymentMiddleware } from 'x402-express';
+import { X402DevKit } from 'x402-devkit';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+async function exampleSeller() {
+  const devkit = new X402DevKit();
+  const wallet = await devkit.getWallet();
+  
+  const app = express();
+  app.use(express.json());
+  
+  const paymentConfig = {
+    '/api/data': {
+      price: '$0.05',
+      network: 'base-sepolia',
+      config: {
+        description: 'Premium data endpoint',
+        mimeType: 'application/json'
+      }
+    }
+  };
+  
+  app.use(paymentMiddleware(
+    wallet.address,
+    paymentConfig,
+    { url: 'https://x402.org/facilitator' }
+  ));
+  
+  app.get('/api/data', (req, res) => {
+    res.json({ data: 'This is premium content!' });
+  });
+  
+  app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+  });
+}
+
+exampleSeller().catch(console.error);

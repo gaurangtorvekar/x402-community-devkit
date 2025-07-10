@@ -1,0 +1,10 @@
+{
+  "address": "0x1234567890123456789012345678901234567890",
+  "encryptedPrivateKey": "mock-encrypted-key",
+  "salt": "mock-salt",
+  "iv": "mock-iv",
+  "authTag": "mock-auth-tag",
+  "createdAt": 1234567890,
+  "entropyHash": "mock-entropy-hash",
+  "version": 1
+}

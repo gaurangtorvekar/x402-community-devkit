@@ -1,0 +1,57 @@
+import { X402DevKit } from 'x402-devkit';
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import chalk from 'chalk';
+
+dotenv.config();
+
+async function main() {
+  console.log(chalk.cyan('🚀 x402 Buyer Example\n'));
+  
+  const devkit = new X402DevKit();
+  const wallet = await devkit.getWallet();
+  
+  console.log(chalk.white('Wallet address:'), chalk.green(wallet.address));
+  
+  const balances = await devkit.getBalances();
+  console.log(chalk.white('ETH balance:'), chalk.yellow(balances.eth));
+  console.log(chalk.white('USDC balance:'), chalk.yellow(balances.usdc));
+  
+  if (await devkit.needsFunding()) {
+    console.log(chalk.red('\n⚠️  Wallet needs funding!'));
+    devkit.showFundingInstructions();
+    return;
+  }
+  
+  console.log(chalk.green('\n✅ Wallet funded and ready!\n'));
+  
+  const client = withPaymentInterceptor(
+    axios.create({
+      timeout: 30000
+    }),
+    wallet
+  );
+  
+  try {
+    console.log(chalk.cyan('Making paid request to x402 API...'));
+    
+    const response = await client.get('https://x402.org/api/example');
+    
+    console.log(chalk.green('\n✅ Success!'));
+    console.log('Response:', response.data);
+    
+    if (response.headers['x-payment-response']) {
+      console.log(chalk.gray('\nPayment confirmed in response header'));
+    }
+    
+  } catch (error: any) {
+    console.error(chalk.red('\n❌ Error:'), error.message);
+    
+    if (error.response?.status === 402) {
+      console.log(chalk.yellow('\nThe server requires payment. Make sure you have enough USDC.'));
+    }
+  }
+}
+
+main().catch(console.error);

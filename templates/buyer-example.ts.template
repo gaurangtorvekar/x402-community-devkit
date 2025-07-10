@@ -1,0 +1,25 @@
+import { X402DevKit } from 'x402-devkit';
+import { withPaymentInterceptor } from 'x402-axios';
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+async function exampleBuyer() {
+  const devkit = new X402DevKit();
+  const wallet = await devkit.getWallet();
+  
+  const client = withPaymentInterceptor(
+    axios.create({ timeout: 30000 }),
+    wallet
+  );
+  
+  try {
+    const response = await client.get('https://api.example.com/paid-endpoint');
+    console.log('Response:', response.data);
+  } catch (error: any) {
+    console.error('Error:', error.message);
+  }
+}
+
+exampleBuyer().catch(console.error);

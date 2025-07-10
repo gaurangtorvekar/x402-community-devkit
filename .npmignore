@@ -1,0 +1,39 @@
+# Source files
+src/
+tsconfig.json
+jest.config.js
+
+# Tests
+__tests__/
+coverage/
+
+# Development
+.env*
+.x402/
+*.wallet.json
+
+# Build tools
+.eslintrc*
+.prettierrc*
+
+# Documentation
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Development dependencies
+devDependencies
