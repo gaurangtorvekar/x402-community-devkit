@@ -17,5 +17,8 @@ module.exports = {
       statements: 80
     }
   },
-  testTimeout: 30000
+  testTimeout: 30000,
+  maxWorkers: 1,
+  forceExit: true,
+  detectOpenHandles: true
 };
